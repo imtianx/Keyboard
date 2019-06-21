@@ -22,17 +22,20 @@ import android.widget.FrameLayout
  * @email imtianx@gmail.com
  * @date 2019-06-21 11:03
  */
-class KeyboardManager constructor(val context: Context) {
+class KeyboardManager constructor(private val context: Context) {
 
     private lateinit var mRootView: ViewGroup
     private lateinit var xKeyboardView: XKeyboardView
     private lateinit var mKeyboardContainerLayoutParams: FrameLayout.LayoutParams
+    private lateinit var naVoiceKeyboard: NAVoiceKeyboard
 
 
     private val editorFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
         if (v is EditText) {
             if (hasFocus) {
-                v.postDelayed({ showSoftKeyboard(v) }, 300)
+                v.postDelayed({
+                    showSoftKeyboard(v)
+                }, 300)
             } else {
                 hideSoftKeyboard()
             }
@@ -58,6 +61,7 @@ class KeyboardManager constructor(val context: Context) {
     fun bindToEditor(editText: EditText, keyboard: NAVoiceKeyboard) {
         editText.setTag(R.id.bind_keyboard_2_editor, keyboard)
         editText.onFocusChangeListener = editorFocusChangeListener
+        naVoiceKeyboard = keyboard
     }
 
     private fun getBindKeyboard(editText: EditText?): NAVoiceKeyboard? {
@@ -75,6 +79,9 @@ class KeyboardManager constructor(val context: Context) {
     }
 
 
+    /**
+     * 显示键盘
+     */
     private fun showSoftKeyboard(editText: EditText) {
         hideSystemKeyboard()
         val keyboard = getBindKeyboard(editText)
@@ -97,7 +104,8 @@ class KeyboardManager constructor(val context: Context) {
     /**
      * 关闭键盘动画
      */
-    private fun hideSoftKeyboard() {
+    fun hideSoftKeyboard() {
+        naVoiceKeyboard.hideKeyboard()
         xKeyboardView.visibility = View.GONE
         xKeyboardView.animation =
             AnimationUtils.loadAnimation(context, R.anim.keyboard_up_to_hide)
@@ -106,10 +114,10 @@ class KeyboardManager constructor(val context: Context) {
     /**
      * 隐藏系统键盘
      */
-    private fun hideSystemKeyboard() {
+    fun hideSystemKeyboard() {
         if (context is Activity) {
             (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-                context.currentFocus!!.windowToken,
+                context.currentFocus?.windowToken,
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
         }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_key_press">#A2A09F</color>
-    <color name="color_key_text">#E2DEDC</color>
-    <color name="color_key_text_black">#000000</color>
+    <color name="color_key_press">#999999</color>
+    <color name="color_key_text">#3E3E3E</color>
     <color name="color_key_normal">#ffffff</color>
-    <color name="color_key_bg">#E2DEDC</color>
+    <color name="color_key_bg">#DDDDDD</color>
 </resources>

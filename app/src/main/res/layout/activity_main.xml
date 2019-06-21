@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:hint="system input"
         android:maxLines="1"
-        android:onClick="openKeyboard"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -28,6 +27,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_system"/>
     
+    <Button
+        android:id="@+id/ban_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="close keyboard"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/et_custom_num_abc"/>
+    
     <android.inputmethodservice.KeyboardView
         android:id="@+id/kv"
         android:layout_width="match_parent"
@@ -39,5 +47,5 @@
         android:keyTextSize="20sp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/et_custom_num_abc"/>
-    
+
 </android.support.constraint.ConstraintLayout>
