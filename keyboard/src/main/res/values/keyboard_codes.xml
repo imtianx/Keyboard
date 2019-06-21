@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="key_code_show_text">-100</integer>
+    <integer name="key_code_complete">-110</integer>
+    <integer name="key_code_speech">-120</integer>
+</resources>

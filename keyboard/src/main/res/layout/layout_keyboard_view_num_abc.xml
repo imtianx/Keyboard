@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    
+    <EditText
+        android:id="@+id/et_hide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+    
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_key_bg"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+        
+        <cn.imtianx.keyboard.NAVoiceKeyboardView
+            android:id="@+id/kv_voice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/color_key_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:keepScreenOn="true"
+            android:keyBackground="@drawable/selector_keyboard_key_bg"
+            android:keyTextColor="@color/color_key_text_black"
+            android:keyTextSize="20sp"
+            android:shadowColor="@color/color_key_text_black"
+            android:shadowRadius="0.0"/>
+    
+    </LinearLayout>
+
+</LinearLayout>
