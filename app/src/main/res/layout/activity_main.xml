@@ -28,13 +28,22 @@
         app:layout_constraintTop_toBottomOf="@id/et_system"/>
     
     <Button
-        android:id="@+id/ban_close"
+        android:id="@+id/btn_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="close keyboard"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/et_custom_num_abc"/>
+    
+    <Button
+        android:id="@+id/btn_finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="finish keyboard"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/btn_close"/>
     
     <android.inputmethodservice.KeyboardView
         android:id="@+id/kv"

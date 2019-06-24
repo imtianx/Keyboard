@@ -1,14 +1,11 @@
 package cn.imtianx.keyboard
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.text.InputType
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -59,6 +56,7 @@ class KeyboardManager constructor(private val context: Context) {
     }
 
     fun bindToEditor(editText: EditText, keyboard: NAVoiceKeyboard) {
+        editText.inputType = InputType.TYPE_NULL
         editText.setTag(R.id.bind_keyboard_2_editor, keyboard)
         editText.onFocusChangeListener = editorFocusChangeListener
         naVoiceKeyboard = keyboard
@@ -82,7 +80,9 @@ class KeyboardManager constructor(private val context: Context) {
     /**
      * 显示键盘
      */
-    private fun showSoftKeyboard(editText: EditText) {
+    fun showSoftKeyboard(editText: EditText) {
+        (context as Activity).window
+            .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         hideSystemKeyboard()
         val keyboard = getBindKeyboard(editText)
         if (keyboard == null) {
@@ -94,9 +94,8 @@ class KeyboardManager constructor(private val context: Context) {
         initKeyboard(keyboard)
         if (mRootView.indexOfChild(xKeyboardView) == -1) {
             mRootView.addView(xKeyboardView, mKeyboardContainerLayoutParams)
-        } else {
-            xKeyboardView.visibility = View.VISIBLE
         }
+        xKeyboardView.visibility = View.VISIBLE
         xKeyboardView.animation =
             AnimationUtils.loadAnimation(context, R.anim.keyboard_down_to_up)
     }
@@ -106,6 +105,10 @@ class KeyboardManager constructor(private val context: Context) {
      */
     fun hideSoftKeyboard() {
         naVoiceKeyboard.hideKeyboard()
+        hideKeyboardAnim()
+    }
+
+    private fun hideKeyboardAnim() {
         xKeyboardView.visibility = View.GONE
         xKeyboardView.animation =
             AnimationUtils.loadAnimation(context, R.anim.keyboard_up_to_hide)
@@ -122,24 +125,4 @@ class KeyboardManager constructor(private val context: Context) {
             )
         }
     }
-
-    companion object {
-
-        @SuppressLint("StaticFieldLeak")
-        @Volatile
-        private var instance: KeyboardManager? = null
-
-        fun getInstance(context: Context): KeyboardManager {
-            if (instance == null) {
-                synchronized(KeyboardManager::class)
-                {
-                    if (instance == null) {
-                        instance = KeyboardManager(context)
-                    }
-                }
-            }
-            return instance!!
-        }
-    }
-
 }
