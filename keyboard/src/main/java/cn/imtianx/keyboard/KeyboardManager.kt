@@ -89,6 +89,11 @@ class KeyboardManager constructor(private val context: Context) {
             Log.e(TAG, "edit text not bind to keyboard")
             return
         }
+
+        editText.isSelected = true
+        editText.isCursorVisible = true
+        editText.setTextIsSelectable(true)
+        editText.requestFocus()
         keyboard.editText = editText
         keyboard.nextFocusView = xKeyboardView.editText
         initKeyboard(keyboard)
@@ -104,6 +109,7 @@ class KeyboardManager constructor(private val context: Context) {
      * 关闭键盘动画
      */
     fun hideSoftKeyboard() {
+        hideSystemKeyboard()
         naVoiceKeyboard.hideKeyboard()
         hideKeyboardAnim()
     }

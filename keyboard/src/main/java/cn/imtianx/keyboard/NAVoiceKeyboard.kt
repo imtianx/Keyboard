@@ -8,6 +8,7 @@ import android.support.annotation.IntegerRes
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import java.lang.ref.WeakReference
 import java.util.*
 
 /**
@@ -34,14 +35,17 @@ class NAVoiceKeyboard @JvmOverloads constructor(
 
     var updateKeyListener: UpdateKeyListener? = null
 
-//    private lateinit var textToSpeech: TextToSpeech
+    private var textToSpeech: TextToSpeech? = null
+    private var contextReference: WeakReference<Context> = WeakReference(context)
 
     init {
-//        textToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener {
-//            textToSpeech.language = Locale.CHINA
-//            textToSpeech.setPitch(1f)
-//            textToSpeech.setSpeechRate(1f)
-//        })
+        contextReference.get()?.let {
+            textToSpeech = TextToSpeech(it, TextToSpeech.OnInitListener {
+                textToSpeech?.language = Locale.CHINA
+                textToSpeech?.setPitch(1f)
+                textToSpeech?.setSpeechRate(1f)
+            })
+        }
         isShifted = true
         speakKeyIndex = getKeyIndex(R.integer.key_code_speech)
         showTextKeyIndex = getKeyIndex(R.integer.key_code_show_text)
@@ -125,7 +129,7 @@ class NAVoiceKeyboard @JvmOverloads constructor(
                     val abc = adjustCase(Character.toString(primaryCode.toChar()))
                     editable.insert(start, abc)
                     if (speakStatus) {
-//                        textToSpeech.speak(abc.toString(), TextToSpeech.QUEUE_FLUSH, null)
+                        textToSpeech?.speak(abc.toString(), TextToSpeech.QUEUE_FLUSH, null)
                     }
                     updateKeyboardViewText()
                 }
