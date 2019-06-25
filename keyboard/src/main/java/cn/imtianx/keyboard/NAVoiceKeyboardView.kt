@@ -5,6 +5,7 @@ import android.content.Context
 import android.inputmethodservice.KeyboardView
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 
 /**
  * <pre>

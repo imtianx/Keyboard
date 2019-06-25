@@ -103,7 +103,7 @@ class NAVoiceKeyboard @JvmOverloads constructor(
 
             when (primaryCode) {
                 KEYCODE_DELETE -> {
-                    // 删除
+                    // 删除,
                     if (!TextUtils.isEmpty(editable)) {
                         if (start > 0) {
                             editable.delete(start - 1, start)
@@ -123,7 +123,7 @@ class NAVoiceKeyboard @JvmOverloads constructor(
                 getKeyCode(R.integer.key_code_speech) -> {
                     // 发音图标
                     speakStatus = speakStatus.not()
-                    updateKeyboardText()
+                    updateKeyboardViewIcon()
                 }
                 else -> {
                     val abc = adjustCase(Character.toString(primaryCode.toChar()))
@@ -131,7 +131,10 @@ class NAVoiceKeyboard @JvmOverloads constructor(
                     if (speakStatus) {
                         textToSpeech?.speak(abc.toString(), TextToSpeech.QUEUE_FLUSH, null)
                     }
-                    updateKeyboardViewText()
+                    /*
+                     通过 addTextChangedListener 监听来修改
+                      */
+                    // updateKeyboardViewText()
                 }
             }
         }
@@ -140,7 +143,7 @@ class NAVoiceKeyboard @JvmOverloads constructor(
     /**
      * 更新 icon
      */
-    private fun updateKeyboardText() {
+    private fun updateKeyboardViewIcon() {
         updateKeyIcon(
             speakKeyIndex, if (speakStatus) {
                 R.drawable.ic_num_abc_voice_selected
@@ -154,8 +157,12 @@ class NAVoiceKeyboard @JvmOverloads constructor(
     /**
      * 更新文本
      */
-    private fun updateKeyboardViewText() {
-        updateKeyLabel(showTextKeyIndex, "${editText?.text.toString().length} 位")
+    fun updateKeyboardViewText(fromOuter: Boolean = false, newDataText: String = "") {
+        if (fromOuter) {
+            updateKeyLabel(showTextKeyIndex, "${newDataText.length} 位")
+        } else {
+            updateKeyLabel(showTextKeyIndex, "${editText?.text.toString().length} 位")
+        }
         updateKeyListener?.updateKeyOnKeyboard(showTextKeyIndex)
     }
 
