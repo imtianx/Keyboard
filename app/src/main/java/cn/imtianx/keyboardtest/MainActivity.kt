@@ -18,11 +18,17 @@ class MainActivity : AppCompatActivity() {
         keyboardManager.bindToEditor(et_custom_num_abc, NAVoiceKeyboard(this))
 
         btn_close.setOnClickListener {
-            keyboardManager.hideSoftKeyboard()
-
+            et_custom_num_abc.clearFocus()
         }
-        btn_finish.setOnClickListener {
-            System.exit(0)
+
+    }
+
+    override fun onBackPressed() {
+        if (et_custom_num_abc.hasFocus()) {
+            // 通过清除焦点关闭键盘
+            et_custom_num_abc.clearFocus()
+        } else {
+            super.onBackPressed()
         }
     }
 

@@ -93,6 +93,7 @@ class KeyboardManager constructor(private val context: Context) {
         editText.isSelected = true
         editText.isCursorVisible = true
         editText.setTextIsSelectable(true)
+        editText.setSelection(0)
         editText.requestFocus()
         keyboard.editText = editText
         keyboard.nextFocusView = xKeyboardView.editText
