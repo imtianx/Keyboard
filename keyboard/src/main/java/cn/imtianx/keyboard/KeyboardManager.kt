@@ -3,8 +3,8 @@ package cn.imtianx.keyboard
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.os.Build
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
@@ -58,11 +58,11 @@ class KeyboardManager constructor(private val context: Context) {
     }
 
     fun bindToEditor(editText: EditText, keyboard: NAVoiceKeyboard) {
-        editText.inputType = InputType.TYPE_NULL
+        fixShowSystemKeyboard(editText)
         editText.setTag(R.id.bind_keyboard_2_editor, keyboard)
         editText.onFocusChangeListener = editorFocusChangeListener
         naVoiceKeyboard = keyboard
-        // 通过监听更新键盘，避免因为 cut/pase 等直接修改 文本
+        // 通过监听更新键盘，避免因为 cut/paste 等直接修改 文本导致键盘无法更新
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -75,6 +75,23 @@ class KeyboardManager constructor(private val context: Context) {
             }
 
         })
+    }
+
+    /**
+     * 解决弹出系统键盘
+     */
+    private fun fixShowSystemKeyboard(editText: EditText) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            editText.showSoftInputOnFocus = false
+        } else {
+            EditText::class.java.getMethod("setShowSoftInputOnFocus", Boolean::class.java)
+                .apply {
+                    isAccessible = true
+                    invoke(editText, false)
+                }
+
+            // editText.inputType = InputType.TYPE_NULL // 不会显示输入光标
+        }
     }
 
     private fun getBindKeyboard(editText: EditText?): NAVoiceKeyboard? {
@@ -104,12 +121,6 @@ class KeyboardManager constructor(private val context: Context) {
             Log.e(TAG, "edit text not bind to keyboard")
             return
         }
-
-        editText.isSelected = true
-        editText.isCursorVisible = true
-        editText.setTextIsSelectable(true)
-        editText.setSelection(0)
-        editText.requestFocus()
         keyboard.editText = editText
         keyboard.nextFocusView = xKeyboardView.editText
         initKeyboard(keyboard)
