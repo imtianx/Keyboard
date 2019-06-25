@@ -119,7 +119,7 @@
             android:codes="@integer/key_code_speech"
             android:horizontalGap="1.8%p"
             android:isRepeatable="true"
-            android:keyWidth="12.2%p"
+            android:keyWidth="13.1%p"
             android:keyEdgeFlags="left"
             android:keyIcon="@drawable/ic_num_abc_voice_normal"/>
         <Key
@@ -147,7 +147,7 @@
         <Key
             android:codes="-5"
             android:isRepeatable="true"
-            android:keyWidth="12.2%p"
+            android:keyWidth="13.1%p"
             android:keyEdgeFlags="right"
             android:keyIcon="@drawable/ic_num_abc_voice_del"/>
     </Row>
@@ -156,13 +156,14 @@
         
         <Key
             android:codes="@integer/key_code_show_text"
-            android:horizontalGap="1.8%p"
-            android:keyWidth="70%p"
+            android:horizontalGap="1.9%p"
+            android:keyWidth="70.2%p"
             android:keyEdgeFlags="left"
             android:keyLabel="0位"/>
         <Key
             android:codes="@integer/key_code_complete"
-            android:keyWidth="25%p"
+            android:keyWidth="25.1%p"
+            android:keyEdgeFlags="right"
             android:keyLabel="完成"/>
     </Row>
 
