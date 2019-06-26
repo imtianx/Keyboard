@@ -1,6 +1,8 @@
 package cn.imtianx.keyboardtest
 
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.support.v7.app.AppCompatActivity
 import cn.imtianx.keyboard.KeyboardManager
 import cn.imtianx.keyboard.NAVoiceKeyboard
@@ -20,7 +22,20 @@ class MainActivity : AppCompatActivity() {
         btn_close.setOnClickListener {
             et_custom_num_abc.clearFocus()
         }
+        setVmPolicy()
+    }
 
+    private fun setVmPolicy() {
+        StrictMode.setVmPolicy(
+            StrictMode.VmPolicy.Builder()
+                .apply {
+                    penaltyDeath()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        detectNonSdkApiUsage()
+                    }
+                    penaltyLog()
+                }.build()
+        )
     }
 
     override fun onBackPressed() {
