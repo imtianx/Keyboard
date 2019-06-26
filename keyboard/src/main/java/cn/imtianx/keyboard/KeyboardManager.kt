@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Build
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
@@ -84,13 +85,15 @@ class KeyboardManager constructor(private val context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.showSoftInputOnFocus = false
         } else {
-            EditText::class.java.getMethod("setShowSoftInputOnFocus", Boolean::class.java)
-                .apply {
-                    isAccessible = true
-                    invoke(editText, false)
-                }
-
-            // editText.inputType = InputType.TYPE_NULL // 不会显示输入光标
+            try {
+                EditText::class.java.getMethod("setShowSoftInputOnFocus", Boolean::class.java)
+                    .apply {
+                        isAccessible = true
+                        invoke(editText, false)
+                    }
+            } catch (e: Exception) {
+                editText.inputType = InputType.TYPE_NULL // 不会显示输入光标
+            }
         }
     }
 
