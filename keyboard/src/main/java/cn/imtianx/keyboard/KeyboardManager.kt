@@ -58,24 +58,45 @@ class KeyboardManager constructor(private val context: Context) {
         }
     }
 
-    fun bindToEditor(editText: EditText, keyboard: NAVoiceKeyboard) {
+    @JvmOverloads
+    fun bindToEditor(
+        editText: EditText,
+        needAddTextChangeListener: Boolean = false,
+        keyboard: NAVoiceKeyboard = NAVoiceKeyboard(context)
+    ) {
         fixShowSystemKeyboard(editText)
         editText.setTag(R.id.bind_keyboard_2_editor, keyboard)
         editText.onFocusChangeListener = editorFocusChangeListener
         naVoiceKeyboard = keyboard
         // 通过监听更新键盘，避免因为 cut/paste 等直接修改 文本导致键盘无法更新
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
+        if (needAddTextChangeListener) {
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                naVoiceKeyboard.updateKeyboardViewText(true, s.toString())
-            }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    updateKeyboardViewText(s.toString())
+                }
 
-        })
+            })
+        }
+    }
+
+    // update text from outer
+    fun updateKeyboardViewText(text: String) {
+        (xKeyboardView.naVoiceKeyboardView.keyboard as NAVoiceKeyboard)
+            .updateKeyboardViewText(
+                true,
+                text
+            )
     }
 
     /**

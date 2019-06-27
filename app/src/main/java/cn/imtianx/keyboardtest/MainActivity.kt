@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.support.v7.app.AppCompatActivity
 import cn.imtianx.keyboard.KeyboardManager
-import cn.imtianx.keyboard.NAVoiceKeyboard
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         keyboardManager = KeyboardManager(this)
 
-        keyboardManager.bindToEditor(et_custom_num_abc, NAVoiceKeyboard(this))
+        keyboardManager.bindToEditor(et_custom_num_abc)
 
         btn_close.setOnClickListener {
             et_custom_num_abc.clearFocus()
