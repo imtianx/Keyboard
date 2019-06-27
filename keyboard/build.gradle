@@ -16,7 +16,7 @@ android {
         // modify version
         def versionMajor = 0
         def versionMinor = 0
-        def versionPatch = 1
+        def versionPatch = 2
         versionCode versionMajor * 100 + versionMinor * 10 + versionPatch
         //noinspection GrReassignedInClosureLocalVar
         pVersion = "${versionMajor}.${versionMinor}.${versionPatch}"
