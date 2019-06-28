@@ -92,11 +92,15 @@ class KeyboardManager constructor(private val context: Context) {
 
     // update text from outer
     fun updateKeyboardViewText(text: String) {
-        (xKeyboardView.naVoiceKeyboardView.keyboard as NAVoiceKeyboard)
-            .updateKeyboardViewText(
-                true,
-                text
-            )
+        try {
+            (xKeyboardView.naVoiceKeyboardView.keyboard as NAVoiceKeyboard)
+                .updateKeyboardViewText(
+                    true,
+                    text
+                )
+        } catch (e: Exception) {
+            naVoiceKeyboard.updateKeyboardViewText(true, text)
+        }
     }
 
     /**
