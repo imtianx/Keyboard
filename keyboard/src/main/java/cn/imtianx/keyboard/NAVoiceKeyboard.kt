@@ -2,14 +2,11 @@ package cn.imtianx.keyboard
 
 import android.content.Context
 import android.inputmethodservice.Keyboard
-import android.speech.tts.TextToSpeech
 import android.support.annotation.DrawableRes
 import android.support.annotation.IntegerRes
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
-import java.lang.ref.WeakReference
-import java.util.*
 
 /**
  * <pre>
@@ -35,17 +32,7 @@ class NAVoiceKeyboard @JvmOverloads constructor(
 
     var updateKeyListener: UpdateKeyListener? = null
 
-    private var textToSpeech: TextToSpeech? = null
-    private var contextReference: WeakReference<Context> = WeakReference(context)
-
     init {
-        contextReference.get()?.let {
-            textToSpeech = TextToSpeech(it, TextToSpeech.OnInitListener {
-                textToSpeech?.language = Locale.CHINA
-                textToSpeech?.setPitch(1f)
-                textToSpeech?.setSpeechRate(1f)
-            })
-        }
         isShifted = true
         speakKeyIndex = getKeyIndex(R.integer.key_code_speech)
         showTextKeyIndex = getKeyIndex(R.integer.key_code_show_text)
@@ -129,12 +116,8 @@ class NAVoiceKeyboard @JvmOverloads constructor(
                     val abc = adjustCase(Character.toString(primaryCode.toChar()))
                     editable.insert(start, abc)
                     if (speakStatus) {
-                        textToSpeech?.speak(abc.toString(), TextToSpeech.QUEUE_FLUSH, null)
+                        SpeechUtil.speak(primaryCode.toChar().toString())
                     }
-                    /*
-                     通过 addTextChangedListener 监听来修改
-                      */
-                    // updateKeyboardViewText()
                 }
             }
         }

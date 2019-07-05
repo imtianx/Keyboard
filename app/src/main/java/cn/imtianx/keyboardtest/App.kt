@@ -1,6 +1,7 @@
 package cn.imtianx.keyboardtest
 
 import android.app.Application
+import cn.imtianx.keyboard.Utils
 
 /**
  * <pre>
@@ -14,6 +15,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        Utils.init(this)
     }
 
     companion object {

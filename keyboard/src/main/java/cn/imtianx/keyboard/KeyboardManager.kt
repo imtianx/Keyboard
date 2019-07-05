@@ -56,6 +56,7 @@ class KeyboardManager constructor(private val context: Context) {
         } else {
             Log.e(TAG, "context must be activity")
         }
+        SpeechUtil.init()
     }
 
     @JvmOverloads
